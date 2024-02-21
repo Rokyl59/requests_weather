@@ -1,11 +1,22 @@
 import requests
+import logging
 
 
-ARTICLE_IDS = ['Лондон', 'Шереметьево', 'Череповец']
+logging.basicConfig(level=logging.INFO)
+
+
+def main():
+    article_ids = ['Лондон', 'Шереметьево', 'Череповец']
+    for article_id in article_ids:
+        params = {'nTqmM': '', 'lang': 'ru'}
+        url = f'https://wttr.in/{article_id}'
+        response = requests.get(url, params=params)
+
+        if response.ok:
+            print(response.text)
+        else:
+            logging.error(f'Ошибка при получении данных для {article_id}. HTTP статус: {response.status_code}')
 
 
 if __name__ == "__main__":
-    for article_id in ARTICLE_IDS:
-        url = f'https://wttr.in/{article_id}?nTqmM&lang=ru'
-        response = requests.get(url)
-        print(response.text)
+    main()
